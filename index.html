@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Litepaper – ProjectName</title>
+
+    <!-- Fonts & Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="icon" href="assets/favicon.png" type="image/png">
+
+    <!-- GSAP Animation Library -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://blog.newt.foundation/assets/css/global.css?v=1d27c98282" />
+    <link rel="stylesheet" type="text/css" href="https://blog.newt.foundation/assets/css/footer.css?v=1d27c98282" />
+    <link rel="stylesheet" type="text/css"
+        href="https://blog.newt.foundation/assets/css/notifications.css?v=1d27c98282" />
+    <script src="https://blog.newt.foundation/assets/js/global.js?v=1d27c98282"></script>
+    <script src="https://blog.newt.foundation/assets/js/custom-elements.js?v=1d27c98282"></script>
+    <script>
+        hexToRgba("#846E46")
+        document.addEventListener('DOMContentLoaded', () => {
+            noHeroHeadingText();
+            setToggle();
+
+            window.addEventListener('resize', debounce(() => {
+                stickyHeading();
+            }, 500))
+        }) 
+    </script>
+    <style>
+        :root {
+            --text-color: #846E46;
+            --background-color: #FFFDF5;
+            --font-heading: 'Inter', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --accent-color: #0E7C86;
+            --accent-hover: #095C63;
+            --toc-highlight: #e0d2b7;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        article ul li a {
+            color: var(--accent-color);
+            text-decoration: none;
+            position: relative;
+            padding-left: 0.5rem;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        article ul li a:hover,
+        article ul li a.active {
+            background-color: var(--toc-highlight);
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        h2 {
+            scroll-margin-top: 6rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        footer {
+            color: #555;
+        }
+    </style>
+</head>
+
+<body class="relative">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-opacity-70 backdrop-blur border-b border-gray-200">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <img src="assets/logo.svg" alt="Logo" class="h-8">
+            <a href="/" class="text-sm font-medium text-gray-600 hover:underline">Back to main site</a>
+        </div>
+    </header>
+
+    <!-- Main Article Content -->
+    <main class="max-w-4xl mx-auto px-6 py-16">
+        <article class="prose prose-lg">
+            <h1 class="text-4xl font-semibold">ProjectName: Verifiable Automation Layer</h1>
+            <p class="text-gray-700 italic mt-2">13 min read · Apr 27, 2025</p>
+            <img src="assets/image.png" alt="Hero Image" class="my-8 rounded shadow">
+
+            <h2 id="table-of-contents">Table of Contents</h2>
+            <ul class="list-disc ml-5">
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#problem">Problem</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#summary">Summary</a></li>
+            </ul>
+
+            <h2 id="introduction">Introduction</h2>
+            <p>The next phase of web3 depends on verifiable automation. This litepaper outlines ProjectName’s
+                architecture for trust-minimized onchain agents.</p>
+
+            <h2 id="problem">Problem</h2>
+            <p>Despite progress in wallet access and DeFi tooling, automation remains opaque and risky. Existing bots
+                lack verifiability, and AI agents introduce new vectors for errors and exploits.</p>
+
+            <h2 id="solution">Solution</h2>
+            <p>ProjectName introduces scoped autonomy, verifiable integrity, and reputation-based agent ecosystems
+                secured with ZKPs and TEEs.</p>
+
+            <h2 id="architecture">Architecture</h2>
+            <p>Our system consists of smart accounts (ERC-4337), zkPermissions, and an execution orchestrator with
+                operators submitting attested and proven actions.</p>
+
+            <h2 id="summary">Summary</h2>
+            <p>Verifiable automation offers a trust layer for agents, enabling secure delegation, transparent action,
+                and scalable web3 interactions.</p>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-8 text-center text-sm">
+        <p>&copy; 2025 ProjectName. Built with ♥</p>
+    </footer>
+
+    <!-- GSAP Scroll Effects -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray("h2").forEach(section => {
+            gsap.from(section, {
+                scrollTrigger: section,
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+
+        // TOC Highlighting
+        const tocLinks = document.querySelectorAll("article ul li a");
+
+        function highlightTOC() {
+            let scrollY = window.scrollY;
+            tocLinks.forEach(link => {
+                let section = document.querySelector(link.getAttribute("href"));
+                if (section && section.offsetTop <= scrollY + 120 && section.offsetTop + section.offsetHeight > scrollY + 120) {
+                    tocLinks.forEach(l => l.classList.remove("active"));
+                    link.classList.add("active");
+                }
+            });
+        }
+
+        window.addEventListener("scroll", highlightTOC);
+    </script>
+</body>
+
+</html>
